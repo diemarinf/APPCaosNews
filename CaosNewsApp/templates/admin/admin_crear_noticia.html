@@ -1,0 +1,71 @@
+{% extends 'admin/admin.html' %}
+{% load static %}
+
+{% block body %}
+<div class="col py-3">
+  <div class="row px-4">
+    <div class="col-md-8">
+      <h2>Crear Noticia</h2>
+      <form method="POST" action="{% url 'admin_crear_noticia' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" id="id_usuario" name="id_usuario" value="{{ request.user.id }}">
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="titulo_noticia" class="form-label">Título de la Noticia:</label>
+          </div>
+          <div class="col">
+            <input type="text" id="titulo_noticia" name="titulo_noticia" class="form-control" required>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="cuerpo_noticia" class="form-label">Cuerpo de la Noticia:</label>
+          </div>
+          <div class="col">
+            <textarea id="cuerpo_noticia" name="cuerpo_noticia" class="form-control" required rows="8"></textarea>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="id_categoria" class="form-label">Categoría:</label>
+          </div>
+          <div class="col">
+            <select id="id_categoria" name="id_categoria" class="form-select" required>
+              <option value="" selected disabled>Selecciona una categoría</option>
+              {% for categoria in categorias %}
+                <option value="{{ categoria.id_categoria }}">{{ categoria.nombre_categoria }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="id_pais" class="form-label">País:</label>
+          </div>
+          <div class="col">
+            <select id="id_pais" name="id_pais" class="form-select">
+              <option value="" selected disabled>Seleccione un país</option>
+              {% for pais in paises %}
+                <option value="{{ pais.id_pais }}">{{ pais.pais }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-3">
+            <label for="imagenes" class="form-label">Imágenes:</label>
+          </div>
+          <div class="col">
+            <input type="file" id="imagenes" name="imagenes" class="form-control" multiple>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8 text-center">
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
